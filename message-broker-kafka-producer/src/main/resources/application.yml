@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: producer-app
+  kafka:
+    # Cung cấp danh sách TẤT CẢ các broker
+    # Client sẽ tự động phát hiện cụm từ danh sách này
+    bootstrap-servers: localhost:19091,localhost:19092,localhost:19093
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # Dùng JsonSerializer để tự động convert object User -> JSON
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false

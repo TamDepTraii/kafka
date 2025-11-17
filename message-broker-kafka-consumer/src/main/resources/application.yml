@@ -1,0 +1,20 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: consumer-app
+  kafka:
+    # Cũng trỏ tới cả cụm
+    bootstrap-servers: localhost:19091,localhost:19092,localhost:19093
+    consumer:
+      # Định danh nhóm consumer
+      group-id: user-group-1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # Dùng JsonDeserializer để convert JSON -> object User
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      # QUAN TRỌNG: Phải "tin tưởng" package chứa DTO
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.tamle.message_broker_kafka_consumer.consumer.User
+      # Đọc từ message đầu tiên nếu là consumer mới
+      auto-offset-reset: earliest
